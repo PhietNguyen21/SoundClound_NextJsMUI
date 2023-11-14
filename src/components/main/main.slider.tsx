@@ -130,7 +130,7 @@ const MainSlider = (props: Iprops) => {
                     <div style={{ textAlign: 'center' }}> <img style={{ width: '90%', margin: 'auto' }} src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track.imgUrl}`} alt="" /></div>
                     <div className="card-footer">
                         <h4 style={{ cursor: 'pointer' }} onClick={() => {
-                            route.push(`/track/${track._id}`)
+                            route.push(`/track/${track._id}?audio=${track.trackUrl}`)
                         }}>{track.title}</h4>
                         <h5> {`${track.category.toLowerCase()} ${index + 1}`}</h5>
                     </div>

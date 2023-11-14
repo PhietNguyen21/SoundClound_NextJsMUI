@@ -15,7 +15,7 @@ const AppFooter = () => {
     }
 
 
-    console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
+    // console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
     return (
 
         <AppBar position='fixed' sx={{ top: 'auto', bottom: 0, bgcolor: '#f2f2f2' }}>
