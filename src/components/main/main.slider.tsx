@@ -11,25 +11,27 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import { useRouter } from "next/navigation";
+
 
 function SampleNextArrow(props: any) {
     const { className, style, onClick } = props;
 
     return (
-        <Button variant='outlined'
-
+        <Button variant='contained'
+            color="inherit"
             sx={{
                 position: 'absolute',
                 right: 0,
-                top: '50%',
+                top: '30%',
                 zIndex: 2,
                 minWidth: 30,
                 width: 35,
-                color: '#f50',
                 border: '1px solid #e5e5e5',
-                transform: 'translateY(-50%)',
+                // transform: 'translateY(-50%)',
                 '&:hover': {
                     border: '1px solid #f50',
+
                     '> .chevNext': {
                         color: '#f50'
                     }
@@ -46,17 +48,18 @@ function SampleNextArrow(props: any) {
 function SamplePrevArrow(props: any) {
     const { onClick } = props;
     return (
-        <Button variant="outlined"
+        <Button variant="contained"
+            color="inherit"
             sx={{
                 position: 'absolute',
                 left: 0,
-                top: '50%',
+                top: '30%',
                 zIndex: 2,
                 minWidth: 30,
                 width: 35,
-                color: '#f50',
+                // color: '#f50',
                 border: '1px solid #e5e5e5',
-                transform: 'translateY(-50%)',
+                // transform: 'translateY(-50%)',
                 '&:hover': {
                     border: '1px solid #f50',
 
@@ -72,33 +75,21 @@ function SamplePrevArrow(props: any) {
     );
 }
 
-
-const CardItem = () => {
-    return <Card sx={{ maxWidth: 345, mr: '20px' }}>
-        <CardActionArea>
-            <CardMedia
-                component="img"
-                height="140"
-                image="/static/images/cards/contemplative-reptile.jpg"
-                alt="green iguana"
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                    Lizard
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000
-                    species, ranging across all continents except Antarctica
-                </Typography>
-            </CardContent>
-        </CardActionArea>
-    </Card>
+interface Iprops {
+    data: ITrackTop[],
+    title: string,
 }
-const MainSlider = () => {
+
+const MainSlider = (props: Iprops) => {
+    // console.log('Check data', props.data)
+    // const linkImg = env.proccess.NEXT_PUBLIC_BACKEND_URL;
+    const { data, title } = props;
+
+    const route = useRouter();
 
     var settings: Settings = {
         dots: false,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 4,
@@ -108,72 +99,47 @@ const MainSlider = () => {
 
     };
     return <Box sx={{
-        margin: '0 50px',
-        '.card': {
-
+        margin: '10px 50px',
+        '.track': {
+            // textAlign: 'center',
             padding: '0 10px',
-
-            'h3': {
-                border: '1px solid #f50',
-                padding: '10px',
+            'img': {
                 height: '200px'
+            },
+            '.card-footer': {
+                height: '70px',
+                width: '90%',
+                margin: 'auto',
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexDirection: 'column',
+                'h4': {
+                    margin: '0'
+                },
+                'h5': {
+                    margin: '0'
+                }
             }
         }
     }}>
-        <h2> List Tracks</h2>
+        <h2> {title}</h2>
         <Slider  {...settings}>
-            <div className="card">
-                <h3>Track 1</h3>
-            </div>
-            <div className="card">
-                <h3>Track 2</h3>
-            </div>
-            <div className="card">
-                <h3>Track 3</h3>
-            </div>
-            <div className="card">
-                <h3>Track 4</h3>
-            </div>
-            <div className="card">
-                <h3>Track 5</h3>
-            </div>
-            <div className="card">
-                <h3>Track 6</h3>
-            </div>
-            <div className="card">
-                <h3>Track 7</h3>
-            </div>
+
+            {data.map((track, index) => {
+                return <div className="track" key={track._id}>
+                    <div style={{ textAlign: 'center' }}> <img style={{ width: '90%', margin: 'auto' }} src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track.imgUrl}`} alt="" /></div>
+                    <div className="card-footer">
+                        <h4 style={{ cursor: 'pointer' }} onClick={() => {
+                            route.push(`/track/${track._id}`)
+                        }}>{track.title}</h4>
+                        <h5> {`${track.category.toLowerCase()} ${index + 1}`}</h5>
+                    </div>
+                </div>
+            })}
 
 
         </Slider>
-
-        <h2>List Tracks</h2>
-        <Slider  {...settings}>
-            <div className="card">
-                <h3>Track 1</h3>
-            </div>
-            <div className="card">
-                <h3>Track 2</h3>
-            </div>
-            <div className="card">
-                <h3>Track 3</h3>
-            </div>
-            <div className="card">
-                <h3>Track 4</h3>
-            </div>
-            <div className="card">
-                <h3>Track 5</h3>
-            </div>
-            <div className="card">
-                <h3>Track 6</h3>
-            </div>
-            <div className="card">
-                <h3>Track 7</h3>
-            </div>
-
-
-        </Slider>
-        <Divider />
+        <Divider style={{ margin: '30px 0' }} />
     </Box>
 }
 export default MainSlider;
