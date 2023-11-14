@@ -156,10 +156,10 @@ export default function AppHeader() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar sx={{ bgcolor: '#233446' }} position="static">
+            <AppBar sx={{ bgcolor: '#333' }} position="static">
                 <Container>
                     <Toolbar>
-
+                        <Avatar onClick={() => { router.push('/') }} sx={{ marginRight: '10px', cursor: 'pointer' }} src='./logo.jpg' alt='logo' />
                         <Typography
                             variant="h6"
                             noWrap
@@ -167,6 +167,7 @@ export default function AppHeader() {
                             sx={{ display: { xs: 'none', sm: 'block' }, cursor: 'pointer' }}
                             onClick={() => { router.push('/') }}
                         >
+
                             SoundClound
                         </Typography>
                         <Search>
@@ -185,7 +186,7 @@ export default function AppHeader() {
                             <Link href='/'>Likes</Link>
                             <Link href='/'>Upload</Link>
 
-                            <Avatar onClick={handleProfileMenuOpen} >VP</Avatar>
+                            <Avatar sx={{ width: '36px', height: '36px' }} onClick={handleProfileMenuOpen} >VP</Avatar>
 
 
                         </Box>

@@ -1,9 +1,12 @@
-import AppHeader from "@/components/header/app.header";
+
+
+import MainSlider from "@/components/main/main.slider";
+import Container from "@mui/material/Container/Container";
 
 const HomePage = () => {
-  return <div>
 
-    Home Page
-  </div>
+  return <Container>
+    <MainSlider />
+  </Container>
 }
 export default HomePage;
