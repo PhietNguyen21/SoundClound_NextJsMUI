@@ -10,7 +10,23 @@ export const authOptions:AuthOptions = {
       clientSecret: process.env.GITHUB_SECRET!,
     }),
     // ...add more providers here
+    
   ],
+  callbacks: {
+    async jwt({ token, user, profile,trigger,session }) {
+      // Persist the OAuth access_token and or the user id to the token right after signin 
+      if(trigger==='signIn')
+      {
+        token.address='Nha Be'
+      }
+      return token
+    },
+    async session({ session, token, user }) {
+    // @ts-ignore
+      session.address=token.address;
+      return session;
+    }
+}
 }
 
 const handler = NextAuth(authOptions)

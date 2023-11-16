@@ -9,6 +9,8 @@ import { getServerSession } from "next-auth/next"
 
 // import { useSession, signIn, signOut } from "next-auth/react"
 const HomePage = async () => {
+
+  // Session Sever
   const session = await getServerSession(authOptions);
   console.log('Session sever', session);
 
