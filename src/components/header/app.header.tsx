@@ -23,6 +23,7 @@ import { useRouter } from 'next/navigation';
 
 
 
+import { useSession, signIn, signOut } from "next-auth/react"
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -66,6 +67,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function AppHeader() {
+
+    const { data: session } = useSession();
 
     const router = useRouter();
 
@@ -182,11 +185,14 @@ export default function AppHeader() {
                         <Box sx={{ flexGrow: 1 }} />
                         <Box sx={{ display: { xs: 'none', md: 'flex', alignItems: 'center', gap: 15, cursor: 'pointer', "> a": { color: 'unset', textDecoration: 'unset' } } }}>
 
-                            <Link href='/playlist'>PlayList</Link>
-                            <Link href='/'>Likes</Link>
-                            <Link href='/'>Upload</Link>
-
-                            <Avatar sx={{ width: '36px', height: '36px' }} onClick={handleProfileMenuOpen} >VP</Avatar>
+                            {session ?
+                                <>
+                                    <Link href='/playlist'>PlayList</Link>
+                                    <Link href='/'>Likes</Link>
+                                    <Link href='/'>Upload</Link>
+                                    <Avatar sx={{ width: '36px', height: '36px' }} onClick={handleProfileMenuOpen} >VP</Avatar>
+                                </> :
+                                <Link href={'/api/auth/signin'}>Login</Link>}
 
 
                         </Box>
