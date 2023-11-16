@@ -159,7 +159,7 @@ export default function AppHeader() {
             <AppBar sx={{ bgcolor: '#333' }} position="static">
                 <Container>
                     <Toolbar>
-                        <Avatar onClick={() => { router.push('/') }} sx={{ marginRight: '10px', cursor: 'pointer' }} src='./logo.jpg' alt='logo' />
+
                         <Typography
                             variant="h6"
                             noWrap
