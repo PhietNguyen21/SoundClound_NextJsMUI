@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import {AuthOptions} from 'next-auth'
+
 export const authOptions:AuthOptions = {
   // Configure one or more authentication providers
   secret:process.env.NO_SECRET,
@@ -13,17 +14,18 @@ export const authOptions:AuthOptions = {
     
   ],
   callbacks: {
-    async jwt({ token, user, profile,trigger,session }) {
+    async jwt({ token,account, user, profile,trigger,session }) {
       // Persist the OAuth access_token and or the user id to the token right after signin 
-      if(trigger==='signIn')
+      if(trigger==='signIn'&& account?.provider==='github')
       {
         token.address='Nha Be'
+        
       }
       return token
     },
-    async session({ session, token, user }) {
-    // @ts-ignore
-      session.address=token.address;
+    async session({ session, token, user}) {
+  
+      session.user._id=""+token.name;
       return session;
     }
 }
