@@ -70,6 +70,8 @@ export default function AppHeader() {
 
     const { data: session } = useSession();
 
+    console.log('Check session on Client', session);
+
     const router = useRouter();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -191,13 +193,11 @@ export default function AppHeader() {
                             {session ?
                                 <>
                                     <Link href='/playlist'>PlayList</Link>
-                                    <Link href='/'>Likes</Link>
+                                    <Link href='/like'>Likes</Link>
                                     <Link href='/'>Upload</Link>
                                     <Avatar sx={{ width: '36px', height: '36px' }} onClick={handleProfileMenuOpen} >VP</Avatar>
                                 </> :
-                                <Link href='#' onClick={() => {
-                                    signIn();
-                                }}>Login</Link>}
+                                <Link href='/auth/signin'>Login</Link>}
 
 
                         </Box>

@@ -2,7 +2,7 @@
 
 import MainSlider from "@/components/main/main.slider";
 import Container from "@mui/material/Container/Container";
-import { sendRequestJS } from '../utils/old.api';
+// import { sendRequestJS } from '../../utils/old.api';
 import { sendRequest } from "@/utils/api";
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { getServerSession } from "next-auth/next"
