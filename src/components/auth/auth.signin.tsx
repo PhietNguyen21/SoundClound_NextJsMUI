@@ -1,13 +1,15 @@
 'use client'
 
-import { GitHub, Google, Lock, Visibility, VisibilityOff } from '@mui/icons-material';
+import { ArrowBack, GitHub, Google, Lock, Visibility, VisibilityOff } from '@mui/icons-material';
 import { Avatar, Box, Button, Divider, Grid, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import { signIn } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 const AuthSignin = () => {
 
-
+    const router = useRouter()
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [userName, setUserName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -40,7 +42,7 @@ const AuthSignin = () => {
 
 
     // }
-    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setIsErrPassword(false);
         setIsErrUsername(false);
@@ -58,6 +60,17 @@ const AuthSignin = () => {
         }
         console.log(userName, password)
 
+        const resCre = await signIn('credentials', {
+            username: userName,
+            password: password,
+            redirect: false,
+        })
+        if (!resCre?.error) {
+            // Dua ve home neu dang nhap thanh cong
+            router.push('/')
+        } else {
+            alert(resCre.error)
+        }
     }
     return (
         <Grid container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
@@ -65,6 +78,10 @@ const AuthSignin = () => {
                 boxShadow: 'rgba(100,100,111,0.2) 0px 7px 29px 0px'
             }}>
                 <div style={{ margin: '20px' }}>
+                    <ArrowBack titleAccess='Back Home' sx={{ cursor: 'pointer' }} onClick={() => {
+                        router.push('/')
+                        // alert('me')
+                    }} />
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: '100%' }}>
                         <Avatar>
                             <Lock />
@@ -88,7 +105,7 @@ const AuthSignin = () => {
                                 </IconButton>
                             </InputAdornment>
                         }
-                    } error={isErrPassword} helperText={errPassword} />
+                    } autoFocus error={isErrPassword} helperText={errPassword} />
 
                     <div style={{ textAlign: 'center' }}>
                         <Button color='primary' variant='contained' fullWidth sx={{ my: 3 }} onClick={(e) => {
